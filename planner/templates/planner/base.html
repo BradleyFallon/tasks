@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'planner/css/materialize.min.css' %}" type="text/css" rel="stylesheet"
+    media="screen,projection" />
+  <link href="{% static 'planner/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+  {% include "planner/nav.html" %}
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">{% block page_name %}"PAGE NAME"{% endblock %}</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">{% block page_description %}"PAGE DESCRIPTION"{% endblock %}</h5>
+      </div>
+      <br><br>
+    </div>
+  </div>
+
+  <div class="container">
+    {% block content %}CONTENT GOES HERE{% endblock %}
+  </div>
+
+  {% include "planner/footer.html" %}
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'planner/js/materialize.js' %}"></script>
+  <script src="{% static 'planner/js/init.js' %}"></script>
+
+</body>
+
+</html>

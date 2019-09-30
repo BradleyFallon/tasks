@@ -1,3 +1,6 @@
+{% extends "planner/base.html"}
+
+{% block content %}
 {% if task_list %}
     <ul>
     {% for task in task_list %}
@@ -7,3 +10,4 @@
 {% else %}
     <p>No tasks are available.</p>
 {% endif %}
+{% endblock %}

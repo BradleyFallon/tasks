@@ -1,0 +1,25 @@
+{% extends "planner/base.html" %}
+
+{% block page_name %}My Tasks{% endblock %}
+{% block page_description %}All of your tasks are listed here{% endblock %}
+
+{% block content %}
+
+<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+
+<ul class="collection">
+
+    {% for task in task_list %}
+
+    <li class="collection-item avatar">
+        <i class="material-icons circle green">check_box</i>
+        <span class="title">{{ task.title}}</span>
+        <p>{{ task.details }}</p>
+        <a href="#!" class="secondary-content"><i class="material-icons">grade</i>{{ task.points }}</a>
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

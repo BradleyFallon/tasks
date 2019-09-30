@@ -5,7 +5,7 @@ from eventtools.models import BaseEvent, BaseOccurrence
 
 
 
-class Schedule():
+class Schedule(models.Model):
     """
     Users:
     There could be multiple users that share a task list.
@@ -17,19 +17,19 @@ class Schedule():
     Occurrences are thereby owned indirectly as well.
 
     """
-    users = models.ManyToManyField(User, through='ScheduleUser')
+    name = models.CharField(max_length=100)
+#     users = models.ManyToManyField(User, through='ScheduleUser')
 
 
-class ScheduleUser(models.Model):
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    # temporary - users can only have one organisation for now
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+# class ScheduleUser(models.Model):
+#     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+#     # temporary - users can only have one organisation for now
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
-class Task():
+class Task(models.Model):
     title = models.CharField(max_length=100)
     details =  models.CharField(max_length=200)
-    is_done = models.BooleanField(default=False)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     points = models.IntegerField(default=10)
 
@@ -47,3 +47,4 @@ class Event(BaseEvent):
 
 class Occurrence(BaseOccurrence):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    is_done = models.BooleanField(default=False)
