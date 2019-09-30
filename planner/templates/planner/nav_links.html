@@ -1,0 +1,9 @@
+<li><a href="{% url 'planner:index' %}">Home</a></li>
+{% if user.is_authenticated %}
+    <li><a href="{% url 'logout' %}">Logout {{ user.username }}</a></li>
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+<li><a href="{% url 'planner:task_list' %}">Today</a></li>
+<li><a href="{% url 'planner:index' %}">Manage</a></li>
+<li><a href="{% url 'admin:index' %}">Admin</a></li>
