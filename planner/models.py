@@ -7,24 +7,24 @@ from eventtools.models import BaseEvent, BaseOccurrence
 
 class Schedule(models.Model):
     """
-    Users:
-    There could be multiple users that share a task list.
-    A user only has one task list that they are associated with,
-    although this is not a necessity.
-
-    Events:
-    A task list stores all events for a user group.
-    Occurrences are thereby owned indirectly as well.
+    This is used to handle a collection of Persons and Tasks. 
+    The schedule is the hub for connecting Persons into a group.
+    When changing the Person associated with a Task, the Person choices are limited
+    to those of the same Schedule as the editor.
 
     """
     name = models.CharField(max_length=100)
-#     users = models.ManyToManyField(User, through='ScheduleUser')
 
 
-# class ScheduleUser(models.Model):
-#     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-#     # temporary - users can only have one organisation for now
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Person(models.Model):
+    """
+    A "User" model just handles authentication. This is an extension upon that,
+    in the form of a One-to-One relationship. This will connect a user with whatever
+    data a user needs to use the app, such as permissions, groups, logs, object ownership etc.
+    """
+    # One-to-One link with a user account
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, null=True, on_delete=models.SET_NULL)
 
 
 class Task(models.Model):
@@ -32,19 +32,11 @@ class Task(models.Model):
     details =  models.CharField(max_length=200)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     points = models.IntegerField(default=10)
+    person = models.OneToOneField(Person, null=True, on_delete=models.SET_NULL)
+    schedule = models.OneToOneField(Schedule, null=True, on_delete=models.SET_NULL)
 
-
-class Event(BaseEvent):
-    """
-    A Task can have multiple event schedules.
-    This is for in case a recurring task is to happen twice a week.
-    This is necessary because events are only daily, weekly, monthly etc.
-
-    Since there are multiple events per Task, the events point to parent Task. 
-    """
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-
-class Occurrence(BaseOccurrence):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    is_done = models.BooleanField(default=False)
+    last_completed = models.DateTimeField('last completed')
+    wait_days = models.IntegerField(default=1) # 1-->daily
+    # to see if a task is due, round down to the beginning of day last_completed
+    # then add datetime.timedelta(days=wait_days)
+    # then check if the result is less than now
