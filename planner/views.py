@@ -2,11 +2,48 @@ from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse
 from django.views import generic
+from django.views.generic.base import TemplateView
+
 
 from .models import Task, Schedule
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the planner index.")
+class LoginView(TemplateView):
+    pass
+
+class Today(TemplateView):
+    pass
+
+class Manager(TemplateView):
+    pass
+
+class questionaire(TemplateView):
+    pass
+
+class register(TemplateView):
+    pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class HomePageView(TemplateView):
+    template_name = "planner/index.html"
 
 
 class ChecklistView(generic.DetailView):
@@ -32,6 +69,23 @@ class TaskView(generic.DetailView):
     """
     model = Task
     template_name = 'planner/task_detail.html'
+
+
+class TaskListView(generic.ListView):
+    template_name = 'planner/tasks.html'
+    context_object_name = 'task_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Task.objects.all()
+
+
+
+
+
+
+
+
 
 
 def done_list():
