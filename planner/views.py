@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse
@@ -5,8 +7,31 @@ from django.views import generic
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 from .models import Task, Schedule, Person
+from .forms import TaskForm
+
+
+@login_required()
+def new_task(request):
+    person = get_object_or_404(Person, user=request.user)
+    schedule = get_object_or_404(Schedule, pk=person.schedule.pk)
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.asignee = person
+            print("person: ", person)
+            task.schedule = schedule
+            print("schedule: ", person.schedule)
+            task.last_completed = datetime.date.today()
+            task.save()
+            return redirect('planner:today')
+    else:
+        form = TaskForm()
+    return render(request, 'planner/new_task.html', {'form': form})
+
 
 class LoginView(TemplateView):
     pass

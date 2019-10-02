@@ -31,10 +31,9 @@ class Person(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=100)
     details =  models.CharField(max_length=200)
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     points = models.IntegerField(default=10)
-    asignee = models.OneToOneField(Person, null=True, blank=True, on_delete=models.SET_NULL)
-    schedule = models.OneToOneField(Schedule, null=True, blank=True, on_delete=models.SET_NULL)
+    asignee = models.ForeignKey(Person, null=True, blank=True, on_delete=models.SET_NULL)
+    schedule = models.ForeignKey(Schedule, null=True, blank=True, on_delete=models.SET_NULL)
 
     last_completed = models.DateTimeField('last completed')
     wait_days = models.IntegerField(default=1) # 1-->daily
