@@ -9,5 +9,6 @@ urlpatterns = [
     path('c<int:checklist_id>/t<int:task_id>/', views.TaskView.as_view(), name='task_detail'),
     path('t<int:pk>/', views.TaskView.as_view(), name='task_detail'),
     path('t/', views.TaskListView.as_view(), name='task_list'),
+    path('today/', views.TaskListToday.as_view(), name='today'),
 ]
 

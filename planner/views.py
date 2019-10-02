@@ -3,15 +3,24 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.base import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-from .models import Task, Schedule
+from .models import Task, Schedule, Person
 
 class LoginView(TemplateView):
     pass
 
-class Today(TemplateView):
-    pass
+
+class TaskListToday(LoginRequiredMixin, generic.ListView):
+    template_name = 'planner/tasks.html'
+    context_object_name = 'task_list'
+    ordering = ['-points']
+
+    def get_queryset(self):
+        person = get_object_or_404(Person, user=self.request.user)
+        return Task.objects.filter(asignee=person)
+
 
 class Manager(TemplateView):
     pass

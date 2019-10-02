@@ -1,10 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from eventtools.models import BaseEvent, BaseOccurrence
-
-
-
 class Schedule(models.Model):
     """
     This is used to handle a collection of Persons and Tasks. 
@@ -15,6 +11,9 @@ class Schedule(models.Model):
     """
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Person(models.Model):
     """
@@ -24,19 +23,24 @@ class Person(models.Model):
     """
     # One-to-One link with a user account
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(Schedule, null=True, on_delete=models.SET_NULL)
+    schedule = models.ForeignKey(Schedule, null=True, blank=True, on_delete=models.SET_NULL)
 
+    def __str__(self):
+        return self.user.username
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
     details =  models.CharField(max_length=200)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     points = models.IntegerField(default=10)
-    person = models.OneToOneField(Person, null=True, on_delete=models.SET_NULL)
-    schedule = models.OneToOneField(Schedule, null=True, on_delete=models.SET_NULL)
+    asignee = models.OneToOneField(Person, null=True, blank=True, on_delete=models.SET_NULL)
+    schedule = models.OneToOneField(Schedule, null=True, blank=True, on_delete=models.SET_NULL)
 
     last_completed = models.DateTimeField('last completed')
     wait_days = models.IntegerField(default=1) # 1-->daily
     # to see if a task is due, round down to the beginning of day last_completed
     # then add datetime.timedelta(days=wait_days)
     # then check if the result is less than now
+
+    def __str__(self):
+        return self.title

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Schedule, Task, Event, Occurrence
+from .models import Schedule, Task, Person
 
 
 
@@ -11,16 +11,11 @@ class ScheduleAdmin(admin.ModelAdmin):
         TaskInline,
     ]
 
-
-class EventInline(admin.TabularInline):
-    model = Event
-
-class TaskAdmin(admin.ModelAdmin):
+class PersonAdmin(admin.ModelAdmin):
     inlines = [
-        EventInline,
+        TaskInline,
     ]
 
 admin.site.register(Schedule, ScheduleAdmin)
-admin.site.register(Task, TaskAdmin)
-admin.site.register(Event)
-admin.site.register(Occurrence)
+admin.site.register(Task)
+admin.site.register(Person, PersonAdmin)
