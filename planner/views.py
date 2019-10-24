@@ -22,9 +22,7 @@ def new_task(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.asignee = person
-            print("person: ", person)
             task.schedule = schedule
-            print("schedule: ", person.schedule)
             task.last_completed = datetime.date.today()
             task.save()
             return redirect('planner:today')
