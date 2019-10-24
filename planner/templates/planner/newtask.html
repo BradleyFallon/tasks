@@ -1,0 +1,8 @@
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'planner:newtask' question.id %}" method="post">
+<input placeholder="Placeholder" id="first_name" type="text" class="validate">
+<label for="first_name">First Name</label>
+<input type="submit" value="Vote">
+</form>

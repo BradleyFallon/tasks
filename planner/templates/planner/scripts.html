@@ -1,0 +1,20 @@
+{% load static %}
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'planner/js/materialize.js' %}"></script>
+<script>
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+    $('.pushpin').pushpin();
+    $('.tabs').tabs();
+    $('.fixed-action-btn').floatingActionButton({
+      direction: 'left',
+      hoverEnabled: false,
+    });
+    $('.collapsible').collapsible();
+    $('.dropdown-trigger').dropdown();
+    $('.modal').modal();
+    $('.pin-footer').pushpin({
+        offset: 600,
+    });
+  });
+</script>

@@ -9,8 +9,9 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans+Condensed:300,300i,700&display=swap" rel="stylesheet">
   {% load static %}
-  <link href="{% static 'planner/css/materialize.min.css' %}" type="text/css" rel="stylesheet"
+  <link href="{% static 'planner/css/materialize.custom.css' %}" type="text/css" rel="stylesheet"
     media="screen,projection" />
   <link href="{% static 'planner/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection" />
 </head>
@@ -20,29 +21,18 @@
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">{% block page_name %}"PAGE NAME"{% endblock %}</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">{% block page_description %}"PAGE DESCRIPTION"{% endblock %}</h5>
-      </div>
-      <br><br>
+      <h2 class="header center">{% block page_name %}{% endblock %}</h2>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container" style="margin-top: 12rem">
     {% block content %}CONTENT GOES HERE{% endblock %}
-  </div>
-
-  </div>
-  <br><br>
   </div>
 
   {% include "planner/footer.html" %}
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'planner/js/materialize.js' %}"></script>
-  <script src="{% static 'planner/js/init.js' %}"></script>
+  {% include "planner/scripts.html" %}
 
 </body>
 

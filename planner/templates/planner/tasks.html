@@ -1,13 +1,156 @@
 {% extends "planner/base.html" %}
-
-{% block page_name %}My Tasks{% endblock %}
-{% block page_description %}All of your tasks are listed here{% endblock %}
-
 {% block content %}
 
-<a href="{% url 'planner:new_task' %}" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+<!-- 
+assignment_ind
+attachment
+av_timer
+autorenew
+beenhere
+cancel
+check
+close
+comment
+create, edit
+delete_forever
+error, new_releases, priority_high, star, whatshot
+feedback
+history
+home
+hourglass_full
+people
+person_outline
+person_add
+send
+settings
+timer
+-->
 
-<ul class="collection">
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large">
+        <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating orange"><i class="material-icons">comment</i></a></li>
+        <li><a class="btn-floating teal"><i class="material-icons">people</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
+    </ul>
+</div>
+
+      
+
+<ul class="collapsible popout">
+
+    {% for task in task_list %}
+    {% for task in task_list %}
+
+
+    <li>
+
+
+        <div class="collapsible-header ">
+                <i class="material-icons Large">person_outline</i>
+                <h6>{{task.title}}</h6>
+            <span class="badge">
+                <i style="color: orange" class="material-icons">whatshot</i>
+                <i style="color: goldenrod" class="material-icons small">star</i><span class="new badge" data-badge-caption="{{task.points}}"></span>
+
+
+
+
+            </span>
+        </div>
+        <div class="collapsible-body">
+            <span class="badge">
+            <a class="btn-floating waves-effect waves-light red lighten-2 modal-trigger" href="#modaldelete"><i class="material-icons">delete_forever</i></a>
+            <a class="btn-floating waves-effect waves-light orange lighten-2 modal-trigger" href="#modaledit"><i class="material-icons">edit</i></a>
+            <a class="btn-floating waves-effect waves-light green lighten-2 modal-trigger" href="#modalcomplete"><i class="material-icons">check</i></a>
+
+
+
+            <!-- <div style="position: relative; height: 15px;">
+                    <div class="fixed-action-btn horizontal direction-top direction-left" style="position: absolute; display: inline-block; right: -40px;">
+                        <a class="btn-floating btn-small red">
+                        <i class="large material-icons">mode_edit</i>
+                        </a>
+                        <ul>
+                        <li>
+                            <a class="btn-floating red" style="opacity: 0; transform: scale(0.4) translateY(0px) translateX(40px);">
+                            <i class="material-icons">insert_chart</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn-floating yellow darken-1" style="opacity: 0; transform: scale(0.4) translateY(0px) translateX(40px);">
+                            <i class="material-icons">format_quote</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn-floating green" style="opacity: 0; transform: scale(0.4) translateY(0px) translateX(40px);">
+                            <i class="material-icons">publish</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn-floating blue" style="opacity: 0; transform: scale(0.4) translateY(0px) translateX(40px);">
+                            <i class="material-icons">attach_file</i>
+                            </a>
+                        </li>
+                        </ul>
+                    </div>
+                </div> -->
+
+
+            </span>
+            <span>{{ task.points }}</span>
+            <span>{{ task.details }}</span>
+        </div>
+
+    </li>
+
+    {% endfor %}{% endfor %}
+</ul>
+
+<!-- Modal Structure -->
+<div id="modaldelete" class="modal">
+    <div class="modal-content">
+        <h4>Delete?</h4>
+        <p>Are you sure you want to delete this task?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn">Cancel</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn">Delete</a>
+    </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modaledit" class="modal">
+<div class="modal-content">
+    <h4>Not Quite...</h4>
+    <p>Do you want to edit this task?</p>
+</div>
+<div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn">Cancel</a>
+    <a href="#!" class="modal-close waves-effect waves-green btn">Edit</a>
+</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalcomplete" class="modal">
+<div class="modal-content">
+    <h4>Complete!</h4>
+    <p>Is this task completed?</p>
+</div>
+<div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn">Cancel</a>
+    <a href="#!" class="modal-close waves-effect waves-green btn">Complete</a>
+</div>
+</div>
+
+    
+
+    
+
+<!-- <ul class="collection">
 
     {% for task in task_list %}
 
@@ -20,6 +163,18 @@
 
     {% endfor %}
 
-</ul>
+
+    {% for task in task_list %}
+
+    <li class="collection-item avatar">
+        <i class="material-icons circle green">check_box</i>
+        <span class="title">{{ task.title}}</span>
+        <p>{{ task.details }}</p>
+        <a href="#!" class="secondary-content"><i class="material-icons">grade</i>{{ task.points }}</a>
+    </li>
+
+    {% endfor %}
+
+</ul> -->
 
 {% endblock %}

@@ -1,10 +1,10 @@
-<footer class="page-footer orange">
+<footer class="page-footer" style="position: fixed; left: 0; bottom: 0; width: 100%; z-index: 100">
     <div class="container">
         <div class="row">
 
 
 
-            <div class="col l3 s12">
+            <div class="col s4">
                 <h5 class="white-text">Account</h5>
                 <ul>
                     {% if user.is_authenticated %}
@@ -17,21 +17,6 @@
                 </ul>
             </div>
 
-            <div class="col l3 s12">
-                <h5 class="white-text">Contact</h5>
-                <ul>
-                    <li><a class="white-text" href="{% url 'admin:index' %}">Admin</a></li>
-                </ul>
-            </div>
-
-
-            <div class="col l6 s12">
-                    <h5 class="white-text">Your Nest Best</h5>
-                    <p class="grey-text text-lighten-4">
-                        We want to improve your life,
-                        by providing a fun and simple way to stay on top of
-                        the small yet important tasks that slip by so easily.</p>
-                </div>
 
         </div>
     </div>
