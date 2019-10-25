@@ -1,1 +1,1 @@
-web: gunicorn tasks.wsgi
+web: gunicorn chores.wsgi
