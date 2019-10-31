@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
@@ -13,6 +14,7 @@ from .models import Task, Schedule, Person
 from .forms import TaskForm
 
 
+@require_POST
 @login_required()
 def new_task(request):
     person = get_object_or_404(Person, user=request.user)
@@ -25,24 +27,32 @@ def new_task(request):
             task.schedule = schedule
             task.last_completed = datetime.date.today()
             task.save()
-            return redirect('planner:today')
-    else:
-        form = TaskForm()
-    return render(request, 'planner/new_task.html', {'form': form})
+            return redirect('planner:task_list')
+
+def tasks_page(request):
+    
+    context = {
+            'form': TaskForm(),
+            'task_list': Task.objects.all(),
+            "big_word": "Big Word",
+        }
+
+    return render( request, 'planner/tasks.html', context)
+
 
 
 class LoginView(TemplateView):
     pass
 
 
-class TaskListToday(LoginRequiredMixin, generic.ListView):
-    template_name = 'planner/tasks.html'
-    context_object_name = 'task_list'
-    ordering = ['-points']
+# class TaskListView(LoginRequiredMixin, generic.ListView):
+#     template_name = 'planner/tasks.html'
+#     context_object_name = 'task_list'
+#     ordering = ['-points']
 
-    def get_queryset(self):
-        person = get_object_or_404(Person, user=self.request.user)
-        return Task.objects.filter(asignee=person)
+#     def get_queryset(self):
+#         person = get_object_or_404(Person, user=self.request.user)
+#         return Task.objects.filter(asignee=person)
 
 
 class Manager(TemplateView):
@@ -107,16 +117,11 @@ class TaskListView(generic.ListView):
     template_name = 'planner/tasks.html'
     context_object_name = 'task_list'
 
+    form = TaskForm()
+    big_word = "BIG WORD"
+
     def get_queryset(self):
-        """Return the last five published questions."""
         return Task.objects.all()
-
-
-
-
-
-
-
 
 
 

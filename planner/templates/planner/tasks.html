@@ -26,6 +26,8 @@ settings
 timer
 -->
 
+<h2 class="center">Today's Tasks</h2>
+
 <div class="fixed-action-btn">
     <a class="btn-floating btn-large">
         <i class="large material-icons">mode_edit</i>
@@ -33,17 +35,16 @@ timer
     <ul>
         <li><a class="btn-floating orange lighten-2"><i class="material-icons">comment</i></a></li>
         <li><a class="btn-floating teal lighten-2"><i class="material-icons">people</i></a></li>
-        <li><a class="btn-floating green lighten-2"><i class="material-icons">add</i></a></li>
+        <li><a class="btn-floating green lighten-2 modal-trigger" href="#modalnewtask"><i class="material-icons">add</i></a></li>
     </ul>
 </div>
+
 
       
 
 <ul class="collapsible popout">
 
     {% for task in task_list %}
-    {% for task in task_list %}
-
 
     <li>
 
@@ -105,7 +106,7 @@ timer
 
     </li>
 
-    {% endfor %}{% endfor %}
+    {% endfor %}
 </ul>
 
 <!-- Modal Structure -->
@@ -145,7 +146,24 @@ timer
 </div>
 </div>
 
-    
+
+
+<!-- Modal Structure -->
+<div id="modalnewtask" class="modal">
+    <form method="POST" class="post-form" action="{% url 'planner:new_task' %}">{% csrf_token %}
+        <div class="modal-content">
+            <h4>New Task!</h4>
+            {{ form.as_p }}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn">Cancel</a>
+            <button class="modal-close waves-effect waves-green btn" type="submit" name="action">Save
+                    <i class="material-icons right">cloud_done</i>
+                </button>
+        </div>
+    </form>
+</div>
+
 
     
 
