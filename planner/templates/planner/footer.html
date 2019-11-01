@@ -5,13 +5,12 @@
 
 
             <div class="col s4">
-                <h5 class="white-text">Account</h5>
+                <h6 class="white-text">Account</h6>
                 <ul>
                     {% if user.is_authenticated %}
                         <li><a class="white-text" href="{% url 'logout' %}">Logout {{ user.username }}</a></li>
                     {% else %}
                         <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
-                        <li><a class="white-text" href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
 
                 </ul>
